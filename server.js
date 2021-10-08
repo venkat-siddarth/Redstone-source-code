@@ -560,7 +560,7 @@ function sendMail(mail, res) {
         to: mail,
         subject: "REDSTONE|Welcomes you to our community",
         html: "<h1>Welcome to redstone community</h1><div><h1>Check out new products</h1><br>" +
-            "<p><tt>Greetings from :<br />Raghav Agrawal<br />Co-owner Redstone</tt></p></div>"
+            "<p><tt>Greetings from :<br />Venkat Siddarth<br />Co-owner Redstone</tt></p></div>"
     };
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
