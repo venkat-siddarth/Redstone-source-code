@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" type="image/png" href="Images/calendar.png" />
+    <title>Redstone | Product</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+    <script src="serverFiles/common.js"></script>
+</head>
+<body>
+
+    <header>
+        <div class="container-fluid bg-dark">
+            <%- include('partials/nav.ejs') %>
+        </div>
+    </header>
+
+    <main id="main-site">
+        <%const src=("../uploads/"+res[0].prodImg)%>
+        <!--   product  -->
+        <section id="product" class="py-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <img src=<%=src%> alt="product" class="img-fluid" style="width: 100% ;height: 500px;">
+                        <div class="form-row pt-4 font-size-16 font-baloo">
+                            <div class="col">
+                                <button type="submit" class="btn btn-danger form-control">Proceed to Buy</button>
+                            </div>
+                            <div class="col">
+                                <button type="submit" class="btn btn-warning form-control" onclick="addtocart('<%=res[0]._id%>')">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 py-5">
+                        <h4 class="font-baloo font-size-20"><%= res[0].itemName%></h4>
+                        <small>by <%=res[0].seller%></small>
+                        <div class="d-flex">
+                            <div class="rating text-warning font-size-12">
+                                <span><i class="fas fa-star"></i></span>
+                                <span><i class="fas fa-star"></i></span>
+                                <span><i class="fas fa-star"></i></span>
+                                <span><i class="fas fa-star"></i></span>
+                                <span><i class="far fa-star"></i></span>
+                            </div>
+                            <a href="#" class="px-2 font-rale font-size-14">20,534 ratings | 1000+ answered questions</a>
+                        </div>
+                        <hr class="m-0">
+
+                        <!---product price-->
+                        <table class="my-3">
+                            <tr class="font-rale font-size-14">
+                                <td>M.R.P:</td>
+                                <td><strike>$<%= res[0].price.toFixed(2) %></strike></td>
+                            </tr>
+                            <tr class="font-rale font-size-14">
+                                <td>Deal Price:</td>
+                                <% var price = res[0].price * (100 - res[0].discount)/100 %>
+                                <td class="font-size-20 text-danger">$<span><%= price.toFixed(2) %></span><small class="text-dark font-size-12">&nbsp;&nbsp;Inclusive of all taxes</small></td>
+                            </tr>
+                            <tr class="font-rale font-size-14">
+                                <td>You Save:</td>
+                                <td><span class="font-size-16 text-danger">$<%= (res[0].price - price).toFixed(2) %></span><small class="text-dark font-size-12">&nbsp;&nbsp;<%= res[0].discount %>%</small></td>
+                            </tr>
+                        </table>
+                        <!---!product price-->
+                        <!--#policy-->
+                        <div id="policy">
+                            <div class="d-flex">
+                                <div class="return text-center mr-5">
+                                    <div class="font-size-20 my-2 color-second">
+                                        <span class="fas fa-retweet border p-3 rounded-pill text-info"></span>
+                                    </div>
+                                    <a href="#" class="font-rale font-size-12">10 Days <br> Replacement</a>
+                                </div>
+                                <div class="return text-center mr-5">
+                                    <div class="font-size-20 my-2 color-second">
+                                        <span class="fas fa-truck border p-3 rounded-pill text-info"></span>
+                                    </div>
+                                    <a href="#" class="font-rale font-size-12">Free <br>Delivery</a>
+                                </div>
+                                <div class="return text-center mr-5">
+                                    <div class="font-size-20 my-2 color-second">
+                                        <span class="fas fa-check-double border p-3 rounded-pill text-info"></span>
+                                    </div>
+                                    <a href="#" class="font-rale font-size-12">1 Year <br>Warranty</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--    !policy -->
+                        <hr>
+
+                        <!-- order-details -->
+                        <div id="order-details" class="font-rale d-flex flex-column text-dark">
+                            <small>Delivery by : Mar 29  - Apr 1</small>
+                            <small>Sold by <a href="#"><%= res[0].seller %> </a>(4.5 out of 5 | 18,198 ratings)</small>
+                            <small><i class="fas fa-map-marker-alt color-primary"></i>&nbsp;&nbsp;Deliver to Pincode - 424201</small>
+                        </div>
+                        <!-- !order-details -->
+
+                        <div class="row">
+                            <div class="col-6">
+                                <!-- product qty section -->
+                                <br />
+                                <div class="qty d-flex">
+                                    <h6 class="font-baloo">Qty</h6>
+                                    <div class="px-4 d-flex font-rale">
+                                        <button class="qty-up border bg-light" data-id="pro1"><i class="fas fa-angle-up"></i></button>
+                                        <input type="text" data-id="pro1" class="qty_input border px-2 w-50 bg-light text-center" disabled value="1" placeholder="1" id="qty">
+                                        <button data-id="pro1" class="qty-down border bg-light"><i class="fas fa-angle-down"></i></button>
+                                    </div>
+                                </div>
+                                <!-- !product qty section -->
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="col-12">
+                        <br />
+                        <h6 class="font-rubik">Product Description</h6>
+                        <hr>
+                        <p class="font-rale font-size-14 text-justify"><%=res[0].description%></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--   !product  -->
+        <%- include('partials/footer.ejs') %>
+
+        <script src="js/addtocart.js"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+        <!-- Owl Carousel Js file -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha256-pTxD+DSzIwmwhOqTFN+DB+nHjO4iAsbgfyFq5K5bcE0=" crossorigin="anonymous"></script>
+
+        <!--  isotope plugin cdn  -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+
+        <!-- Custom Javascript -->
+        <script src="js/index1.js"></script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" type="image/png" href="Images/calendar.png" />
+    <title>
+        Redstone | Cart
+    </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="style.css">
+    <script src="serverFiles/common.js"></script>
+</head>
+<body>
+    <div class="container-fluid bg-dark">
+        <%- include('partials/nav.ejs') %>
+        <% var total=0;%>
+    </div>
+
+    <main id="main-site">
+
+        <!-- Shopping cart section  -->
+            <section id="cart" class="py-3">
+                <div class="container-fluid w-75">
+                    <h5 class="font-baloo font-size-20">Shopping Cart</h5>
+
+                    <!--  shopping cart items   -->
+                        <div class="row">
+                            <div class="col-sm-9">
+                                <%for(var i=0;i<res.length;i++){%>
+                                <!-- cart item -->
+                                    <div class="row border-top py-3 mt-3 <%=res[i]._id%> cart">
+                                        <div class="col-sm-2">
+                                            <img src=<%=("../uploads/"+res[i].prodImg)%> style="height: 120px;" alt="cart1" class="img-fluid">
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <h5 class="font-baloo font-size-20"><%=res[i].itemName%></h5>
+                                            <small><%=res[i].seller %></small>
+                                            <!-- product rating -->
+                                            <div class="d-flex">
+                                                <div class="rating text-warning font-size-12">
+                                                    <span><i class="fas fa-star"></i></span>
+                                                    <span><i class="fas fa-star"></i></span>
+                                                    <span><i class="fas fa-star"></i></span>
+                                                    <span><i class="fas fa-star"></i></span>
+                                                    <span><i class="far fa-star"></i></span>
+                                                  </div>
+                                                  <a href="#" class="px-2 font-rale font-size-14">20,534 ratings</a>
+                                            </div>
+                                            <!--  !product rating-->
+
+                                            <!-- product qty -->
+                                            <div class="qty d-flex pt-2">
+                                                <div class="d-flex font-rale w-25">
+                                                    
+                                                    <input type="text" data-id="pro1" class="qty_input border px-2 w-100 bg-light text-center" disabled value="<%=qty.get(res[i]._id)%>" onchange="calc()" placeholder="1">
+                                                    
+                                                    
+                                                </div>
+                                                <button type="submit" class="btn font-baloo text-danger px-3 border-right" id="<%=res[i]._id%>" onclick="del(this)">Delete</button>
+                                            </div>
+                                            <!-- !product qty -->
+
+                                        </div>
+
+                                        <div class="col-sm-2 text-right">
+                                            <div class="font-size-20 text-danger font-baloo">
+                                                $<span class="product_price"><%= (res[i].price*(100-res[i].discount)/100).toFixed(2) %></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <!-- !cart item -->
+                                <%}%>
+                            </div>
+                            <!-- subtotal section-->
+                            <div class="col-sm-3">
+                                <div class="sub-total border text-center mt-2">
+                                    <h6 class="font-size-12 font-rale text-success py-3"><i class="fas fa-check"></i> Your order is eligible for FREE Delivery.</h6>
+                                    <div class="border-top py-4">
+                                        <h5 class="font-baloo font-size-20">Subtotal (<span class="sub"></span>):&nbsp;<br><span class="text-danger">$<span class="text-danger" id="deal-price"></span> </span> </h5>
+                                        <button type="submit" class="btn btn-warning mt-3"><a href="/address" style="text-decoration: none;">Proceed to Buy</a></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- !subtotal section-->
+                        </div>
+                    <!--  !shopping cart items   -->
+                </div>
+            </section>
+        <!-- !Shopping cart section  -->
+
+    <%- include('partials/footer.ejs') %>
+
+<script>
+    calc();
+    function calc() {
+        console.log("i am using calc")
+        var total=0,k=document.getElementsByClassName("qty_input");
+        var m = document.getElementsByClassName("product_price");
+        qty_input=[];
+        pro_price = [];
+        grossPrice=[];
+        var sum=0;
+        for(var i=0;i<k.length;i++){
+            qty_input.push(parseInt(k[i].value));
+            pro_price.push(parseFloat(m[i].innerHTML));
+            grossPrice.push(qty_input[i]*pro_price[i]);
+            total+= qty_input[i] * pro_price[i];
+            sum+=qty_input[i];
+        }
+        console.log(pro_price);
+        console.log(qty_input);
+        $("#deal-price").html(total.toFixed(2));
+        $(".sub").html(sum+" items")
+        let count = k.length;
+        $(".cartValue").html(sum);
+    }
+    function del(ele){
+        $("." + ele.id).remove();
+        var xhttp=new XMLHttpRequest();
+        xhttp.onreadystatechange=function(){
+            if (this.readyState==4 && this.status==200)
+            {
+                if(this.responseText=="ok")
+                {
+                    console.log("Cart database is updated");
+                }
+            }
+        }
+        xhttp.open("POST","/process",true);
+        var obj={"cart_id":"<%=cart_id%>","id":ele.id}
+        console.log("Using del function "+obj.id);
+        xhttp.setRequestHeader('content-type', 'application/json');
+        xhttp.send(JSON.stringify(obj));
+        calc();
+}
+
+</script>
+
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+        <!-- Owl Carousel Js file -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha256-pTxD+DSzIwmwhOqTFN+DB+nHjO4iAsbgfyFq5K5bcE0=" crossorigin="anonymous"></script>
+
+        <!--  isotope plugin cdn  -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+
+        <!-- Custom Javascript -->
+        <script src="js/index2.js"></script>
+</body>
+</html>

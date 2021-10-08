@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark" style="padding-right: calc(12%);position: relative;">
+
+    <a class="navbar-brand" href="#">
+        <img src="Images/calendar.png" alt="logo" style="width: 40px;" style="display: flex;justify-content: center;align-items: center;position: relative;">Redstone
+    </a>
+    <div class="navbar-nav" style="width: 100%;">
+
+        <input type="search" placeholder="Search" style="border: none;border-radius: 2px;width: 78%;position: relative;"><button type="button" class="btn btn-success">Search</button>
+
+    </div>
+    <div style="display: flex;align-items: flex-end;position: relative;">
+        <% if(!isAuthenticated){ %>
+            <a href="/Loginpage" target="_blank"><button type="button" class="btn btn-success">Login</button></a>
+        <% } else { %>
+            <a href="/"><button type="button" class="btn btn-success mr-3"><i class="fas fa-home"></i></button></a>
+            <div class="dropdown mr-2">
+                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                  <i class="fas fa-users"></i>
+                </button>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="#"><%= name %></a>
+                  <a class="dropdown-item" href="#"><%= email %></a>
+                  <a class="dropdown-item" href="/orders">Orders</a>
+                </div>
+            </div>
+            <a href="/logout"><button type="button" class="btn btn-success">Logout</button></a>
+            <a href="/cart">
+                <button type="button" class="btn btn-danger ml-5">
+                    <i class="fas fa-shopping-cart"></i>
+                </button>
+            </a>
+            <span class="badge badge-light cartValue"><%= typeof count != 'undefined' ? count : 0 %></span>
+        <% } %>
+    </div>
+</nav>

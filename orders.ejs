@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="shortcut icon" type="image/png" href="Images/calendar.png" />
+    <title>Redstone | Orders</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+        .bcontent {
+            margin-top: 10px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid bg-dark">
+        <%- include('partials/nav.ejs') %>
+    </div>
+
+    <div class="container bcontent">
+        <h2>My Orders</h2>
+        <hr/>
+        <%console.log(orderData[0].product.length)%> 
+        <% for(var i=0;i<orderData.length;i++){
+            var tot=0,tot_price=0; 
+            for(var j=0;j<orderData[i].product.length;j++) 
+            {       
+                tot+=orderData[i].qty.get(orderData[i].product[j]);
+                tot_price+=parseFloat(orderData[i].price.get(orderData[i].product[j]))*orderData[i].qty.get(orderData[i].product[j]);
+            } 
+            tot_price= tot_price.toFixed(2);
+            console.log(tot,tot_price);
+        %>
+        <div class="card">
+            <div class="row no-gutters">
+                <div class="col-sm-5">
+                   <img src="Images/orderImg.jpg" width="100%">
+                </div>
+                <div class="col-sm-7">
+                    <div class="card-body">
+                        <h5 class="card-title"><%=orderData[i].product.title%></h5>
+                        <p class="card-text">
+                            <strong>
+                                OrderId: <%=orderData[i]._id%><br>
+                                Total no of items: <%=tot%><br>
+                                Shipping Address: <%=orderData[i].shipping_address %><br>
+                                <% var timezone = new Date(orderData[i].ordered_date) %>
+                                <% var date = timezone.getDate(); %>
+                                <% var month = timezone.getMonth()+1; %>
+                                <% var year = timezone.getFullYear(); %>
+                                Ordered on: <%= date +"-"+ month +"-"+ year %> 
+                                <h5 style="color: rgb(17, 211, 17);">
+                                    Total:$<%=tot_price%>
+                                </h5>
+                                <br>            
+                            </strong> 
+                            <a href="/invoice?id=<%=orderData[i]._id %>" target="_blank">View Invoice</a>   
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% } %> 
+    </div><br><br>
+    <%-include('partials/footer.ejs') %>
+</body>
+
+</html>

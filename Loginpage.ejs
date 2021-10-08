@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="shortcut icon" type="image/png" href="Images/calendar.png" />
+    <title>Redstone | Ecom</title>
+    <link rel="stylesheet" href="css/loginPage.css">
+    <script src="js/loginPage.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/usm/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="serverFiles/common.js"></script>
+</head>
+
+<body class="bg-info">
+    <div class="container-fluid text-center pt-3">
+        <%- include('partials/messages.ejs'); %>
+    </div>
+    <div class="loginbox1">
+        
+        <form id="form1" action="/login" method="POST">
+            <div id="wrapper1"><img src="Images/calendar.png" alt="usericon" id="loginicon1"></div>
+            <h1>Login Here</h1>
+
+            <label for="email">Email</label>
+            <div id="k1" class="k1">
+                <input type="email" id="email" name="email" placeholder="Enter your name">
+            </div>
+            <label for="paswd">Password</label>
+            <div id="l1" style="margin-bottom: 20px;">
+                <input type="password" id="paswd" name="password" placeholder="Enter your password">
+            </div>
+            <div id="sign1"><input type="checkbox" name="sign in"> Keep me signed in </div>
+            <div><input type="submit" value="Login"></div>
+            <div class="k1"><a href="/SignUppage" target="_blank">Dont have a account? <span style="color: blue;">Signup here</span></a></div>
+        </form>
+
+
+    </div>
+    
+    <%- include('partials/footer.ejs') %>
+
+
+
+</body>
+</html>
